@@ -9,21 +9,31 @@
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
 
+
+def check_sequence( sequence ):
+    isOkay = 0
+    matches = 0
+    nucleotides = "atcg"
+
+
+    for i in range(0, len(sequence)):
+        for j in range (0, len(nucleotides)):
+            if sequence[i] == nucleotides[j]:
+                matches=matches+1
+
+    if matches == len(sequence):
+        isOkay=1
+    return isOkay
+
+
+
 def main():
     pass
+
 
 if __name__ == '__main__':
     main()
 
-sequence = input ("Please enter a ten digit nucleotide sequence ")
-print (sequence)
+sequence = input('Please enter a ten digit nucleotide sequence ')
+print (check_sequence(sequence))
 
-
-#If then statement to enforce the sequence divided as an array maximum 10 characters
-if sequence == sequence[10]:
-print ("You have entered more than 10 nucleotides please try again")
-sequence = input ("Please enter a ten digit nucleotide sequence ")
-
-
-
-print ("Colin was here")
