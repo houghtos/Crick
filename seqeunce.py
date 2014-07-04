@@ -23,3 +23,7 @@ print (sequence)
 if sequence == sequence[10]:
 print ("You have entered more than 10 nucleotides please try again")
 sequence = input ("Please enter a ten digit nucleotide sequence ")
+
+
+
+print ("Colin was here")
