@@ -10,42 +10,63 @@
 #-------------------------------------------------------------------------------
 
 
-class sequence:    #Created a 'class' named sequence
-    seq= ""        #Create a variable for the class "sequence" class which is equal to an empty string (Character array with no characters, size zero)
+class sequence:
+    seq= ""
 
 
-
-#Why do I need to make the variable of the class "self.seq = s" in a function we named here "set"  --?
-#Overloard function.  This function will run default if no value is given to s
-#Function: Sets seq variable equal to s
-
-    def set( self, s ): #"def" declares a function.  The name  of the function is "set". All functions in a class must contain ( self
+    def set( self, s ):
 
         self.seq = s.lower()
-        print (self.seq)
-        return #ends the function set
+        return
 
+    #def codonset (self, s = None):
+        if s == None:
+            s = self.check_seq
 
+        print (s)
+        return
 
-#This will run if value is given
     def check_seq ( self, s = None):
         if s == None:
             s=self.seq
-        matches = 0 #Has a value of +1 added
+        matches = 0
         nucleotides = "atcg"
-        for i in range(0, len(s)): #For loop run as much times as the length of the string, "i" is introduced as a loop variable equal to 0 running to length of "s" which is equal to "seq" class variable from running dna.set()
-            for j in range (0, len(nucleotides)): #For loop runs
-                if s[i] == nucleotides[j]: #If list (array) of variable s[i which is defined as 0 --- THIS IS THE LINE I DONT UNDERSTAND
-                    matches=matches+1 #Add one to variable matches introduced above
+        for i in range(0, len(s)):
+            for j in range (0, len(nucleotides)):
+                if s[i] == nucleotides[j]:
+                    matches=matches+1
 
         if matches == len(s)and len(s) > 0:
             isOkay=1
-
 
         else:
             isOkay=0
 
         return isOkay
+
+
+
+    def converter (self, s = None):
+        if s == None:
+            s  = self.seq #These two lines set s = seq input from set() function
+
+
+            m = 0
+            q = 3
+            j = 0
+
+
+
+        for i in range (0, len(s), 3):
+            print (s[m:q])
+            m = m + 3
+            q = q + 3
+            j = j + 1
+
+
+
+
+
 
 
 
@@ -59,8 +80,10 @@ if __name__ == '__main__':
 #---------------------------
 
 
-dna = sequence() #Define DNA as apart of the sequence class.  Can now use functions
-dna.set("ATCA")  #Sets class variable seq to string "atcg"
-print (dna.check_seq())
+dna = sequence()
+dna.set("ATCACGTC")
+dna.check_seq()
+#dna.codonset()
+dna.converter()
 
 
