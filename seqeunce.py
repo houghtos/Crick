@@ -20,11 +20,11 @@ class sequence:
         return
 
     #def codonset (self, s = None):
-        if s == None:
-            s = self.check_seq
-
-        print (s)
-        return
+    #    if s == None:
+    #        s = self.check_seq
+    #
+    #    print (s)
+    #    return
 
     def check_seq ( self, s = None):
         if s == None:
@@ -44,31 +44,26 @@ class sequence:
 
         return isOkay
 
-
+    def decapitated (self, s = None):
+        if s == None:
+            s=self.seq
+        return s[0:len(s) - (len(s)%3)]
 
     def converter (self, s = None):
         if s == None:
-            s  = self.seq #These two lines set s = seq input from set() function
+            s = self.decapitated(self.seq) #These two lines set s = seq input from set() function
 
+        table_protein [
+            ["ttt","Phe"],
 
-            m = 0
-            q = 3
-            j = 0
-
+        ]
 
 
         for i in range (0, len(s), 3):
-            print (s[m:q])
-            m = m + 3
-            q = q + 3
-            j = j + 1
+            triplet = s[i:i+3]
+            print (triplet)
 
-
-
-
-
-
-
+        return
 
 #--------------------------
 def main():
@@ -82,8 +77,11 @@ if __name__ == '__main__':
 
 dna = sequence()
 dna.set("ATCACGTC")
-dna.check_seq()
-#dna.codonset()
+
+print ("Sequence: ", dna.seq)
+print ("Decapitated: ", dna.decapitated())
+print ("Checked out? ", dna.check_seq())
+
 dna.converter()
 
 
