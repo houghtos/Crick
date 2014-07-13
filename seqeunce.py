@@ -8,8 +8,7 @@
 # Copyright:   (c) Sean 2014
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-
-
+\
 class sequence:
     seq= ""
 
@@ -53,6 +52,7 @@ class sequence:
         if s == None:
             s = self.decapitated(self.seq) #These two lines set s = seq input from set() function
 
+        import numpy
         table_protein [
             ["ttt","Phe"],
             ["ttc","Phe"],
@@ -120,7 +120,6 @@ class sequence:
             ["ggg","Gly"]
         ]
 
-
         for i in range (0, len(s), 3):
             triplet = s[i:i+3]
             print (triplet)
@@ -145,5 +144,6 @@ print ("Decapitated: ", dna.decapitated())
 print ("Checked out? ", dna.check_seq())
 
 dna.converter()
+
 
 
