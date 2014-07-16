@@ -8,7 +8,7 @@
 # Copyright:   (c) Sean 2014
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-\
+
 class sequence:
     seq= ""
 
@@ -17,13 +17,6 @@ class sequence:
 
         self.seq = s.lower()
         return
-
-    #def codonset (self, s = None):
-    #    if s == None:
-    #        s = self.check_seq
-    #
-    #    print (s)
-    #    return
 
     def check_seq ( self, s = None):
         if s == None:
@@ -53,7 +46,8 @@ class sequence:
             s = self.decapitated(self.seq) #These two lines set s = seq input from set() function
 
         import numpy
-        table_protein [
+
+        table_protein = [
             ["ttt","Phe"],
             ["ttc","Phe"],
             ["tta","Leu"],
@@ -122,9 +116,24 @@ class sequence:
 
         for i in range (0, len(s), 3):
             triplet = s[i:i+3]
-            print (triplet)
 
-        return
+
+            for i in range (0, len(table_protein)):
+                if table_protein[i][0] == triplet:
+                    print (table_protein[i][0], " ", table_protein[i][1])
+
+    def rnaconverter (self, s = None):
+        if s == None:
+            s=self.seq
+        j = ""
+
+        for i in range (0, len(s)):
+            if s[i] == "t":
+                j = j + "u"
+            else:
+                j = j + s[i]
+        return j
+
 
 #--------------------------
 def main():
@@ -137,13 +146,14 @@ if __name__ == '__main__':
 
 
 dna = sequence()
-dna.set("ATCACGTC")
+dna.set(input("Please enter a string "))
+print (dna.rnaconverter())
 
-print ("Sequence: ", dna.seq)
-print ("Decapitated: ", dna.decapitated())
-print ("Checked out? ", dna.check_seq())
+#print ("Sequence: ", dna.seq)
+#print ("Decapitated: ", dna.decapitated())
+#print ("Checked out? ", dna.check_seq())
 
-dna.converter()
+#dna.converter()
 
 
 
