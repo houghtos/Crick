@@ -8,7 +8,116 @@
 # Copyright:   (c) Sean 2014
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
+'''
+def insertion (list):
+    for index in range (1,len(list)):
+        value = list[index]
+        i = index - 1
+        while i>=0:
+            if value < list[i]:
+                list[i+1] = list[i] #shift number in slot i right to slot i + 1
+                list[i] = value #shift value left into slot i
+                i = i - 1
+            else:
+                break
+'''
+class HMM:
+    toy_states = {}
+    toy_observations = {}
+    toy_start_probability = {}
+    toy_transition_probaility = {}
+    toy_emission_probability = {}
 
+    def dataset (self,):
+
+        states = ('Intron', 'Exon', "5' Splice")
+
+        observations = ('A', 'T', 'C', 'G')
+
+        start_probability = {'Proceed': 1, 'No': 0.0}
+
+        transition_probability = {
+       'Exon' : {'Proceed': 0.1, 'Residue': 0.9},
+       "5' Splice" : {'Proceed': 1, 'Residue': 0.0},
+       'Intron': {'Proceed': 0.1, 'Residue': 0.9}
+
+        }
+
+        emission_probability = {
+       'Exon' : {'A': 0.25, 'T': 0.25, 'C': 0.25, 'G' : 0.25},
+       "5' Splice" : {'A': 0.05, 'T': 0.0, 'C': 0.0, 'G' : 0.95},
+       'Intron': {'A': 0.4, 'T': 0.4, 'C': 0.1, 'G' : 0.1}
+        }
+
+        states = self.toy_states
+        observations =  self.toy_observations
+        start_probabdility = self.toy_start_probability
+        transition_probability = self.toy_transition_probaility
+        emission_probability = self.toy_emission_probability
+
+        return
+
+
+    def viterbi(self, obs = None, states = None, start_p = None, trans_p = None, emit_p = None):
+        V = [{}]
+        path = {}
+
+        if obs == None:
+            obs = self.toy_observations
+        if states == None:
+            states = self.toy_states
+        if start_p == None:
+            start_p = self.toy_start_probability
+        if trans_p == None:
+            trans_p = self.toy_transition_probaility
+        if emit_p == None:
+            emit_p = self.toy_emission_probability
+
+        # Initialize base cases (t == 0)
+        for y in states:
+            V[0][y] = start_p[y] * emit_p[y][obs[0]]
+            path[y] = [y]
+
+        # Run Viterbi for t > 0
+        for t in range(1, len(obs)):
+            V.append({})
+            newpath = {}
+
+            for y in states:
+                (prob, state) = max((V[t-1][y0] * trans_p[y0][y] * emit_p[y][obs[t]], y0) for y0 in states)
+                V[t][y] = prob
+                newpath[y] = path[state] + [y]
+
+            # Don't need to remember the old paths
+            path = newpath
+        n = 0           # if only one element is observed max is sought in the initialization values
+        if len(obs)!=1:
+            n = t
+        print_dptable(V)
+        (prob, state) = max((V[n][y], y) for y in states)
+        return (prob, path[state])
+
+    # Don't study this, it just prints a table of the steps.
+    def print_dptable(V):
+        s = "    " + " ".join(("%7d" % i) for i in range(len(V))) + "\n"
+        for y in V[0]:
+            s += "%.5s: " % y
+            s += " ".join("%.7s" % ("%f" % v[y]) for v in V)
+            s += "\n"
+        print(s)
+    '''
+    def example():
+
+        return viterbi(observations,
+                       states,
+                       start_probability,
+                       transition_probability,
+                       emission_probability)
+    print(example())
+    '''
+
+
+#Functions dnaconverter and rnaconverter of this class should not be called at the same time
 class sequence:
     seq= ""
 
@@ -134,6 +243,19 @@ class sequence:
                 j = j + s[i]
         return j
 
+    def dnaconverter (self, s = None):
+        if s == None:
+            s=self.seq
+        j = ""
+
+        for i in range (0, len(s)):
+            if s[i] == "u":
+                j = j + "t"
+            else:
+                j = j + s[i]
+        return j
+
+
 
 #--------------------------
 def main():
@@ -146,14 +268,23 @@ if __name__ == '__main__':
 
 
 dna = sequence()
+
+'''
 dna.set(input("Please enter a string "))
-print (dna.rnaconverter())
+print (dna.seq)
+print (dna.dnaconverter())
 
-#print ("Sequence: ", dna.seq)
-#print ("Decapitated: ", dna.decapitated())
-#print ("Checked out? ", dna.check_seq())
+print ("Sequence: ", dna.seq)
+print ("Decapitated: ", dna.decapitated())
+print ("Checked out? ", dna.check_seq())
+'''
 
-#dna.converter()
+test = HMM()
+test.dataset()
+test.viterbi()
+
+
+
 
 
 
