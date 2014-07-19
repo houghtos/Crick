@@ -8,8 +8,8 @@
 # Copyright:   (c) Sean 2014
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-'''
-def insertion (list):
+
+def insertion (list bn):
     for index in range (1,len(list)):
         value = list[index]
         i = index - 1
@@ -20,7 +20,7 @@ def insertion (list):
                 i = i - 1
             else:
                 break
-'''
+
 class HMM:
     toy_states = {}
     toy_observations = {}
@@ -282,6 +282,8 @@ print ("Checked out? ", dna.check_seq())
 test = HMM()
 test.dataset()
 test.viterbi()
+
+insertion
 
 
 
