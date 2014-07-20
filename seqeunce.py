@@ -8,8 +8,8 @@
 # Copyright:   (c) Sean 2014
 # Licence:     <your licence>
 #-------------------------------------------------------------------------------
-
-def insertion (list bn):
+'''
+def insertion (list):
     for index in range (1,len(list)):
         value = list[index]
         i = index - 1
@@ -20,7 +20,7 @@ def insertion (list bn):
                 i = i - 1
             else:
                 break
-
+'''
 class HMM:
     toy_states = {}
     toy_observations = {}
@@ -28,37 +28,21 @@ class HMM:
     toy_transition_probaility = {}
     toy_emission_probability = {}
 
-    def dataset (self,):
+    def dataset (self, states, observations, start_probability,
+                 transition_probability, emission_probability):
 
-        states = ('Intron', 'Exon', "5' Splice")
-
-        observations = ('A', 'T', 'C', 'G')
-
-        start_probability = {'Proceed': 1, 'No': 0.0}
-
-        transition_probability = {
-       'Exon' : {'Proceed': 0.1, 'Residue': 0.9},
-       "5' Splice" : {'Proceed': 1, 'Residue': 0.0},
-       'Intron': {'Proceed': 0.1, 'Residue': 0.9}
-
-        }
-
-        emission_probability = {
-       'Exon' : {'A': 0.25, 'T': 0.25, 'C': 0.25, 'G' : 0.25},
-       "5' Splice" : {'A': 0.05, 'T': 0.0, 'C': 0.0, 'G' : 0.95},
-       'Intron': {'A': 0.4, 'T': 0.4, 'C': 0.1, 'G' : 0.1}
-        }
-
-        states = self.toy_states
-        observations =  self.toy_observations
-        start_probabdility = self.toy_start_probability
-        transition_probability = self.toy_transition_probaility
-        emission_probability = self.toy_emission_probability
+        self.toy_states = states
+        self.toy_observations = observations
+        self.toy_start_probability = start_probability
+        self.toy_transition_probaility = transition_probability
+        self.toy_emission_probability = emission_probability
 
         return
 
 
-    def viterbi(self, obs = None, states = None, start_p = None, trans_p = None, emit_p = None):
+    def viterbi(self, obs = None, states = None,
+                start_p = None,
+                trans_p = None, emit_p = None):
         V = [{}]
         path = {}
 
@@ -73,11 +57,14 @@ class HMM:
         if emit_p == None:
             emit_p = self.toy_emission_probability
 
-        # Initialize base cases (t == 0)
-        for y in states:
+        # Initialize base cases (t == 0), "for y in each state"... y is now the value of each state.  y is a throwaway variable that is being looped.  Rather than looping through a numerical list, it looping through the list of states
+
+        for y in states: #You do not use range because you alreay have a list to step through.  Previously, range created a numberical list (e.g. 0, 10 stepped trhoguh 0, 1, 2 ,3 .... , 9
             V[0][y] = start_p[y] * emit_p[y][obs[0]]
             path[y] = [y]
 
+        (test1,test2)= "BLAH"
+        print (test1, test2)
         # Run Viterbi for t > 0
         for t in range(1, len(obs)):
             V.append({})
@@ -280,11 +267,26 @@ print ("Checked out? ", dna.check_seq())
 '''
 
 test = HMM()
-test.dataset()
+test.dataset(
+    ('Intron', 'Exon', "5' Splice"),
+    ('A', 'T', 'C', 'G'),
+    {
+        "Intron" : 1,
+        "Exon" : 1,
+        "5' Splice" : 1
+    },
+    {
+       'Exon' : .1,
+       "5' Splice" : 1,
+       'Intron': .1
+    },
+    {
+        'Exon' : {'A': 0.25, 'T': 0.25, 'C': 0.25, 'G' : 0.25},
+        "5' Splice" : {'A': 0.05, 'T': 0.0, 'C': 0.0, 'G' : 0.95},
+        'Intron': {'A': 0.4, 'T': 0.4, 'C': 0.1, 'G' : 0.1}
+    }
+)
 test.viterbi()
-
-insertion
-
 
 
 
