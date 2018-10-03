@@ -3,10 +3,6 @@
 # Purpose:
 #
 # Author:      Sean
-#
-# Created:     03/07/2014
-# Copyright:   (c) Sean 2014
-# Licence:     <your licence>
 #-------------------------------------------------------------------------------
 '''
 def insertion (list):
