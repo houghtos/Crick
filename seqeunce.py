@@ -53,9 +53,9 @@ class HMM:
         if emit_p == None:
             emit_p = self.toy_emission_probability
 
-        # Initialize base cases (t == 0), "for y in each state"... y is now the value of each state.  y is a throwaway variable that is being looped.  Rather than looping through a numerical list, it looping through the list of states
+        # Initialize base cases (t == 0), where 'y' is the value of each state.  
 
-        for y in states: #You do not use range because you alreay have a list to step through.  Previously, range created a numberical list (e.g. 0, 10 stepped trhoguh 0, 1, 2 ,3 .... , 9
+        for y in states: 
             V[0][y] = start_p[y] * emit_p[y][obs[0]]
             path[y] = [y]
 
@@ -80,7 +80,7 @@ class HMM:
         (prob, state) = max((V[n][y], y) for y in states)
         return (prob, path[state])
 
-    # Don't study this, it just prints a table of the steps.
+    # Prints a table of the steps.
     def print_dptable(V):
         s = "    " + " ".join(("%7d" % i) for i in range(len(V))) + "\n"
         for y in V[0]:
